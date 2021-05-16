@@ -1,33 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:newsapp/webview.dart';
-class ArticleTile extends StatelessWidget {
+class ArticleTile_Category extends StatelessWidget {
   final String imageUrl,url,title,description;
-  ArticleTile({@required this.imageUrl,@required this.url,
+  ArticleTile_Category({@required this.imageUrl,@required this.url,
     @required this.title,@required this.description});
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(25),
+      borderRadius: BorderRadius.circular(12),
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.black,
-            Colors.grey[800]]
-          ),
-          //border: Border.all(color: Colors.white),
           boxShadow: [
-            BoxShadow(
-              color: Colors.white60,
-              offset: Offset(0.0, 1.0), //(x,y)
-              blurRadius: 6.0,
-            ),
-          ],
+          BoxShadow(
+          color: Colors.white60,
+          offset: Offset(0.0, 1.0), //(x,y)
+          blurRadius: 6.0,
         ),
-        margin: EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 8),
-        height: MediaQuery.of(context).size.height-110.0,
-        width: MediaQuery.of(context).size.width-25.0,
+        ],
+          color: Colors.black,
+        ),
+
+        margin: EdgeInsets.only(left: 5,right: 5,top: 0,bottom: 16),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -35,7 +30,7 @@ class ArticleTile extends StatelessWidget {
             onTap: (){
               Navigator.push(context,
                   MaterialPageRoute(builder:(context)=>WebViewClass(
-                    articleUrl : this.url
+                      articleUrl : this.url
                   ))
               );
             },
@@ -45,29 +40,25 @@ class ArticleTile extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(imageUrl,fit: BoxFit.cover,height: 400,width: MediaQuery.of(context).size.width-25.0,),
+                  child: Image.network(imageUrl),
                 ),
-                SizedBox(height: 14),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(title,
                     style:TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),),
                 ),
-                SizedBox(height: 8),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0,2.0,8.0,0.0),
-                    child: Text(description,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
-                      ),),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(description,
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w300,
+                    ),),
                 ),
               ],
             ),

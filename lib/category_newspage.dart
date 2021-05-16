@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:newsapi/newsapi.dart';
-import 'package:newsapp/helper/Article_Tile.dart';
+import 'package:newsapp/helper/ArticleTile_Categories.dart';
 
 class CategoryPage extends StatefulWidget {
   final ArticleResponse categoryResponse;
-  CategoryPage({Key key,this.categoryResponse}):super(key: key);
+  final String category;
+  CategoryPage({Key key,this.categoryResponse,this.category}):super(key: key);
 
   @override
   _CategoryPageState createState() => _CategoryPageState();
@@ -18,18 +19,19 @@ class _CategoryPageState extends State<CategoryPage> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              backgroundColor: Colors.grey[850],
+              backgroundColor: Colors.black,
               floating: true,
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('News'),
                   Text(
-                    'App',
+                    widget.category,
                     style: TextStyle(
                       color: Colors.amberAccent,
                     ),
-                  )
+                  ),
+                  Text('News'),
                 ],
               ),
               centerTitle: true,
@@ -37,18 +39,22 @@ class _CategoryPageState extends State<CategoryPage> {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  SizedBox(height: 8.0),
                   Container(
+                    color:Colors.grey[700],
                     padding: EdgeInsets.only(top: 10.0),
                     child: ListView.builder(
                         physics: ClampingScrollPhysics(),
                         itemCount: widget.categoryResponse.articles.length,
                         shrinkWrap: true,
                         itemBuilder:(context,index){
-                          return ArticleTile(imageUrl: widget.categoryResponse.articles[index].urlToImage,
+                          if(widget.categoryResponse.articles[index].urlToImage!=null && widget.categoryResponse.articles[index].url!=null
+                              && widget.categoryResponse.articles[index].title!=null && widget.categoryResponse.articles[index].description!=null)
+                            return ArticleTile_Category(imageUrl: widget.categoryResponse.articles[index].urlToImage,
                               url: widget.categoryResponse.articles[index].url,
                               title: widget.categoryResponse.articles[index].title,
                               description: widget.categoryResponse.articles[index].description);
+                          else
+                            return SizedBox(height: 0.0,);
                         }),
                   )
                 ],

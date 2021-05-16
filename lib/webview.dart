@@ -25,6 +25,7 @@ class _WebViewClassState extends State<WebViewClass> {
               floating: true,
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text('News'),
                   Text(

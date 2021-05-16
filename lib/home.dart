@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              backgroundColor: Colors.grey[850],
+              backgroundColor: Colors.black,
               floating: true,
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -53,11 +53,13 @@ class _HomeState extends State<Home> {
             ),
             SliverToBoxAdapter(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: 2.0,),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6),
-                      height: 90,
+                      color: Colors.grey[900],
+                      padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 3.0),
+                      height: 100,
                       child: ListView.builder(
                         itemCount:importedList.length,
                         shrinkWrap: true,
@@ -71,19 +73,25 @@ class _HomeState extends State<Home> {
                         },
                       ),
                     ),
-                    SizedBox(height: 2.0,),
+                    //SizedBox(height: 2.0,),
                     Container(
-                      padding: EdgeInsets.only(top: 10.0),
+                      color: Colors.grey[800],
+                      height: MediaQuery.of(context).size.height-110.0,
+                      padding: EdgeInsets.only(top: 10.0,left: 8.0),
                       child: ListView.builder(
-                          //physics: ClampingScrollPhysics(),
+                          physics: ClampingScrollPhysics(),
                           itemCount: dataHomePage['topHeadlines'].articles.length,
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemBuilder:(context,index){
-                            return ArticleTile(imageUrl: dataHomePage['topHeadlines'].articles[index].urlToImage,
+                            if(dataHomePage['topHeadlines'].articles[index].urlToImage!=null && dataHomePage['topHeadlines'].articles[index].url!=null
+                                && dataHomePage['topHeadlines'].articles[index].description!=null && dataHomePage['topHeadlines'].articles[index].title!=null)
+                              return ArticleTile(imageUrl: dataHomePage['topHeadlines'].articles[index].urlToImage,
                                 url: dataHomePage['topHeadlines'].articles[index].url,
                                 title: dataHomePage['topHeadlines'].articles[index].title,
                                 description: dataHomePage['topHeadlines'].articles[index].description);
+                            else
+                              return SizedBox(height: 0.0,);
                           }),
                     )
                   ],
@@ -106,9 +114,20 @@ class CategoryTile extends StatelessWidget {
       onTap: (){
       Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryPage(
         categoryResponse: this.categoryResponse,
+        category: this.categoryName,
       )));
       },
       child: Container(
+        decoration: BoxDecoration(
+          //border: Border.all(color: Colors.white)
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white,
+              offset: Offset(0.0, 1.0), //(x,y)
+              blurRadius: 6.0,
+            ),
+          ],
+        ),
         margin: EdgeInsets.only(right: 16),
         child: Stack(
           children: [
@@ -118,7 +137,7 @@ class CategoryTile extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.center,
-              width: 120,height: 80,
+              width: 120,height: 120,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
                 color: Colors.black38,
